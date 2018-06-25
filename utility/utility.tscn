@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+func find_children_node(node, group, array): 
+	if node != null: 
+		var children = node.get_children()
+		for child in children:
+			if child.is_in_group(group):
+				array.push_back(child)
+			if !child.is_in_group('actor'):
+				find_children_node(child, group, array)
+
+func get_all_class_of_type(node, group):
+	var array = []
+	find_children_node(node, group, array)
+	return array
+"
+
+[node name="utility" type="Node" index="0"]
+
+script = SubResource( 1 )
+
+

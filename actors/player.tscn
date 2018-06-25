@@ -1,0 +1,97 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends KinematicBody2D
+
+export(int) var id = 0
+
+func _ready():
+	pass"
+
+[sub_resource type="CapsuleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 10.0
+height = 20.0
+
+[sub_resource type="Animation" id=3]
+
+length = 1.0
+loop = false
+step = 0.1
+
+[node name="main_character" type="KinematicBody2D" index="0" groups=[
+"player_pawn",
+"actor",
+]]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = SubResource( 1 )
+id = 0
+
+[node name="anim_sprite" type="AnimatedSprite" parent="." index="0"]
+
+animation = "default"
+
+[node name="collision" type="CollisionShape2D" parent="." index="1"]
+
+shape = SubResource( 2 )
+
+[node name="camera" type="Camera2D" parent="." index="2"]
+
+anchor_mode = 1
+rotating = false
+current = false
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+[node name="animation_handler" type="AnimationTreePlayer" parent="." index="3"]
+
+playback_process_mode = 1
+master_player = NodePath("")
+base_path = NodePath("..")
+active = false
+data = {
+"active": false,
+"connections": [ "anim", "out", 0 ],
+"master": NodePath(""),
+"nodes": [ {
+"id": "mix",
+"mix": 0.37,
+"position": Vector2( 615, 29 ),
+"type": "mix"
+}, {
+"animation": SubResource( 3 ),
+"filter": [  ],
+"id": "anim",
+"position": Vector2( 318, 16 ),
+"type": "animation"
+}, {
+"id": "out",
+"position": Vector2( 634, 16 ),
+"type": "output"
+} ]
+}
+
+

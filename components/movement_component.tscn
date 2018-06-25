@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+export(int) var max_speed = 600
+export(float) var ground_friction = 8
+export(int) var weight = 100
+export(int) var braking_friction = 2048
+export(int) var acceleration = 2048
+
+enum movement_modes { none, walking, falling }
+
+#local space
+var velocity = Vector2(0, 0)
+var movement_mode = movement_modes.none
+var is_moving = false
+
+func add_movement(x, y):
+	velocity.x += x
+	velocity.y += y
+
+func is_moving():
+	return velocity.x == 0
+
+func is_falling():
+	return velocity.y == 0
+
+func get_movement_mode():
+	if is_falling():
+		return movement_modes.falling
+	else:
+		return movement_modes.walking
+"
+
+[node name="movement_component" type="Node" index="0"]
+
+script = SubResource( 1 )
+max_speed = 600
+ground_friction = 8
+weight = 100
+braking_friction = 2048
+acceleration = 2048
+
+

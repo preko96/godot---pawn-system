@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+#should be directly the child of the root
+
+# for type checking
+export(NodePath) var root_node_path
+export(int, 0, 9) var default_pawn_id = 0
+var controlled_pawn = null
+
+func _ready():
+	var root_node = get_node(root_node_path)
+	var result = utility.get_all_class_of_type(root_node, 'player_pawn')
+	for player in result:
+		if player.id == default_pawn_id:
+			if controlled_pawn == null:
+				controlled_pawn = player
+			else:
+				print('controlled player pawn wasnt null')
+	if controlled_pawn == null:
+		print('didnt find any player pawn with the default id')
+	else:
+		print('found: ', controlled_pawn)"
+
+[node name="controller" type="Node" index="0"]
+
+script = SubResource( 1 )
+root_node_path = NodePath(".")
+default_pawn_id = 0
+
+
